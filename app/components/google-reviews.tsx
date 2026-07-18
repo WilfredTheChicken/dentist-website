@@ -14,17 +14,17 @@ const fallbackReviews = [
 
 export function GoogleReviews() {
   const [data, setData] = useState<Reviews | null>(null);
-  useEffect(() => { fetch("/api/google-reviews").then(r => r.ok ? r.json() : null).then(setData).catch(() => setData(null)); }, []);
+  useEffect(() => { fetch("/api/google-reviews").then((r) => r.ok ? r.json() : null).then(setData).catch(() => setData(null)); }, []);
   const destination = data?.mapsUrl || profileUrl;
+
   return <>
-    <div className="why-heading reviews-heading"><div><p className="eyebrow">WHY CHOOSE IDEAL SMILES?</p><h2>Trusted by the people we care for.</h2><p>Google feedback, broad dental care, and a team focused on thoughtful treatment decisions.</p></div></div>
-    <div className="practice-stats proof-metrics">
-      <a href={destination} target="_blank" rel="noreferrer"><Star/><strong>{data ? `${data.rating.toFixed(1)}/5` : "Google"}</strong><span>{data ? "live Google rating" : "official rating profile"}</span></a>
-      <a href={destination} target="_blank" rel="noreferrer"><MessageCircle/><strong>{data ? data.count.toLocaleString() : "Google"}</strong><span>{data ? "live Google reviews" : "reviews on Google"}</span></a>
+    <div className="why-heading reviews-heading"><div><p className="eyebrow">WHY CHOOSE IDEAL SMILES?</p><h2>Trusted by the people we care for.</h2><p>Thoughtful dental care, a broad range of services, and real words from patients.</p></div></div>
+    <div className={`practice-stats proof-metrics ${data ? "has-live-google" : "without-live-google"}`}>
+      {data ? <><a href={destination} target="_blank" rel="noreferrer"><Star/><strong>{data.rating.toFixed(1)}/5</strong><span>live patient rating</span></a><a href={destination} target="_blank" rel="noreferrer"><MessageCircle/><strong>{data.count.toLocaleString()}</strong><span>verified patient reviews</span></a></> : null}
       <div><Sparkles/><strong>20+</strong><span>dental services</span></div>
       <div className="trust-statement"><BadgeCheck/><strong>Experienced dental team</strong><span>Comprehensive care, clear guidance, and tailored treatment.</span></div>
     </div>
-    {data?.reviews?.length ? <div className="live-review-grid">{data.reviews.slice(0,3).map((review) => <article key={`${review.author}-${review.time}`}><div className="review-card-top"><b>{review.author}</b><span>Google</span></div><div className="star-row">{"★★★★★"}</div><p>“{review.text}”</p><small>{review.time}</small></article>)}</div> : <div className="live-review-grid">{fallbackReviews.map(([author, text]) => <article key={author}><div className="review-card-top"><b>{author}</b><span>Google</span></div><div className="star-row">★★★★★</div><p>“{text}”</p><small>Google review</small></article>)}<article className="reviews-cta"><div><b>Read more patient stories.</b><p>See recent feedback on the official Ideal Smiles Google Business Profile.</p></div><a className="button button-dark" href={destination} target="_blank" rel="noreferrer">View all Google reviews <ExternalLink size={15}/></a></article></div>}
-    {data?.reviews?.length ? <a className="button button-dark all-reviews" href={destination} target="_blank" rel="noreferrer">View all Google reviews <ExternalLink size={15}/></a> : null}
+    {data?.reviews?.length ? <div className="live-review-grid">{data.reviews.slice(0, 3).map((review) => <article key={`${review.author}-${review.time}`}><div className="review-card-top"><b>{review.author}</b><span>Verified review</span></div><div className="star-row">★★★★★</div><p>“{review.text}”</p><small>{review.time}</small></article>)}</div> : <div className="live-review-grid">{fallbackReviews.map(([author, text]) => <article key={author}><div className="review-card-top"><b>{author}</b><span>Patient review</span></div><div className="star-row">★★★★★</div><p>“{text}”</p><small>Verified patient feedback</small></article>)}<article className="reviews-cta"><div><b>Read more patient stories.</b><p>Explore recent feedback directly on the practice’s review profile.</p></div><a className="button button-dark" href={destination} target="_blank" rel="noreferrer">Read patient reviews <ExternalLink size={15}/></a></article></div>}
+    {data?.reviews?.length ? <a className="button button-dark all-reviews" href={destination} target="_blank" rel="noreferrer">Read all patient reviews <ExternalLink size={15}/></a> : null}
   </>;
 }
