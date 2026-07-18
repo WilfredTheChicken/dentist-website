@@ -7,7 +7,7 @@ export default function Home() {
     <div className="utility"><span>Modern, thoughtful dentistry in Staten Island</span><a href="tel:+17182277400"><Phone size={13}/> Call the office</a></div>
     <header className="site-header">
       <Link className="brand logo-brand" href="/"><img src="/ideal-smiles-logo.png" alt="Ideal Smiles Dental"/></Link>
-      <nav className="desktop-nav"><Link href="/">Home</Link><Link href="/services">Services</Link><Link href="/team">Meet Our Team</Link><a href="#why">Why Choose Us</a></nav>
+      <nav className="desktop-nav"><Link className="active" href="/">Home</Link><Link href="/services">Services</Link><Link href="/team">Meet Our Team</Link><a href="#why">Why Choose Us</a></nav>
       <a className="button button-dark" href="tel:+17182277400">Book a visit <ArrowRight size={16}/></a>
     </header>
     <section className="hero section-wrap">
